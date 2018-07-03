@@ -91,7 +91,7 @@ app.get("/", function(req, res) {
   res.end("Welcome to my site!");
 });
 
-app.get("/complement", function(req, res) {
+app.get("/compliment", function(req, res) {
   res.end("You look nice today");
 });
 
@@ -102,21 +102,21 @@ console.log("listening on http://localhost:3000");
 Looks pretty similar, right? Express is pretty thin (doesn't do too much) which is great. Let's break it down.
 
 * `const app = express();` is how you create a new server.
-* `app.get(url, callback);` is how you handle a new route. A route is how you handle you the request when a user hits a particular URL. In this case we set up two, the default home page, /, and /complement. Try visiting both http://localhost:3000 and http://localhost:3000/complement. If you try a different URL from those, it'll give a 404 not found error.
+* `app.get(url, callback);` is how you handle a new route. A route is how you handle you the request when a user hits a particular URL. In this case we set up two, the default home page, /, and /compliment. Try visiting both http://localhost:3000 and http://localhost:3000/compliment. If you try a different URL from those, it'll give a 404 not found error.
 
 
-Otherwise it's pretty similar, right? Let's go one step further and make it serve a front end. Make a new folder in your project called public. Every file we put in here we're going to serve publically so don't put anything sensitive in here (like passwords or access keys. Make a file called complements.js in this public folder.
+Otherwise it's pretty similar, right? Let's go one step further and make it serve a front end. Make a new folder in your project called public. Every file we put in here we're going to serve publically so don't put anything sensitive in here (like passwords or access keys. Make a file called compliments.js in this public folder.
 
 ```js
 document
-  .querySelector(".request-complement")
+  .querySelector(".request-compliment")
   .addEventListener("click", function() {
-    fetch("/complement")
+    fetch("/compliment")
       .then(function(res) {
         return res.json();
       })
       .then(function(data) {
-        document.querySelector(".complement").innerText = data.complement;
+        document.querySelector(".compliment").innerText = data.compliment;
       })
       .catch(function(err) {
         console.error(err);
@@ -124,7 +124,7 @@ document
   });
   ```
 
-  Mostly nothing new here. The /complement path means it's going to request it from the same server that this was served from. In this case it'd be http://localhost:3000/complement
+  Mostly nothing new here. The /compliment path means it's going to request it from the same server that this was served from. In this case it'd be http://localhost:3000/compliment
 
   Make new index.html in the root directory of this project (where server.js and package.json are.) Put in it:
 
@@ -134,20 +134,20 @@ document
 <html lang="en">
 
 <head>
-  <title>Complements</title>
+  <title>compliments</title>
 </head>
 
 <body>
-  <h1>Complements!</h1>
-  <p class="complement">none loaded yet</p>
-  <button class="request-complement">Request New Complement</button>
-  <script src="./public/complements.js"></script>
+  <h1>compliments!</h1>
+  <p class="compliment">none loaded yet</p>
+  <button class="request-compliment">Request New compliment</button>
+  <script src="./public/compliments.js"></script>
 </body>
 
 </html>
 ```
 
-Nothing new here either. Notice we are requesting the complements.js file from the public directory.
+Nothing new here either. Notice we are requesting the compliments.js file from the public directory.
 
 Refactor (a word which means rework your code) your server.js file to look like:
 
@@ -157,7 +157,7 @@ Refactor (a word which means rework your code) your server.js file to look like:
 const express = require("express");
 const path = require("path");
 
-const complements = [
+const compliments = [
   "You like nice today",
   "That dress looks nice on you",
   "Have you been working out?",
@@ -169,9 +169,9 @@ const complements = [
   "You've learned a lot of things, and that's pretty hard to do"
 ];
 
-function getRandomComplement() {
-  const randomIndex = Math.floor(Math.random() * complements.length);
-  return complements[randomIndex];
+function getRandomcompliment() {
+  const randomIndex = Math.floor(Math.random() * compliments.length);
+  return compliments[randomIndex];
 }
 
 const app = express();
@@ -180,10 +180,10 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/complement", function(req, res) {
+app.get("/compliment", function(req, res) {
   res
     .json({
-      complement: getRandomComplement()
+      compliment: getRandomcompliment()
     })
     .end();
 });
@@ -196,7 +196,7 @@ console.log("listening on http://localhost:3000");
 
 Alright! A bit here but let's work it out!
 
-* The `getRandomComplement` function returns a random item from the complements array. Math.random() gives you random number between 0 and 1. We take that and multiply that by how long the complements array is (which is cool because we can add and subtract items from the complements array and not change this function). This is basically the same as saying we're going take a 0%-100% randomly of the array length. We'll end up with a number like  2.16231583252359. We need that to be a whole number so it's a useful index, so we say Math.floor() which gives us that number rounding down, so  Math.floor(3.9) is 3 (there's also Math.ceil to round up and Math.round to round how we normally do.) The result is we get a random number between 0 (the first element of an element array) and complements.length - 1 (the last element of the array). We then use that to return a random element from  complements!
+* The `getRandomcompliment` function returns a random item from the compliments array. Math.random() gives you random number between 0 and 1. We take that and multiply that by how long the compliments array is (which is cool because we can add and subtract items from the compliments array and not change this function). This is basically the same as saying we're going take a 0%-100% randomly of the array length. We'll end up with a number like  2.16231583252359. We need that to be a whole number so it's a useful index, so we say Math.floor() which gives us that number rounding down, so  Math.floor(3.9) is 3 (there's also Math.ceil to round up and Math.round to round how we normally do.) The result is we get a random number between 0 (the first element of an element array) and compliments.length - 1 (the last element of the array). We then use that to return a random element from  compliments!
 
 * `res.sendFile(path.join(__dirname, "index.html"));` sends the user the `index.html` we just created. path is a libray for getting correct file locations. In this case, we're getting the whole path to it so Express can find it. `__dirname` is a special Node variable that's the folder of where the server.js file is. We know that `index.html` is in the same folder, so we're saying serve the `index.html` file found in the same directory as `server.js`.
 
