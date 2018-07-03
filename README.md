@@ -43,7 +43,7 @@ server.listen(3000);
 ```
 
 
-Go to your terminal and run node server.js. You should see the "listening on http://localhost:3000" message logged out. Navigate your browser to http://localhost:3000. You should see the text hello! responded back to you. Look at your terminal and it should show two requests, one for / and one for  /favicon.ico. The / represents the base, home page that you requested by going to the bare domain localhost:3000. If you went to http://localhost:3000/lol then you'd see /lol there (you can actually try that if you want to.) The /favicon.ico request is the browser trying to get the favicon which is that little icon that the browser puts on the browser tab.
+Go to your terminal and run `node server.js`. You should see the "listening on http://localhost:3000" message logged out. Navigate your browser to http://localhost:3000. You should see the text hello! responded back to you. Look at your terminal and it should show two requests, one for / and one for  /favicon.ico. The / represents the base, home page that you requested by going to the bare domain localhost:3000. If you went to http://localhost:3000/lol then you'd see /lol there (you can actually try that if you want to.) The /favicon.ico request is the browser trying to get the favicon which is that little icon that the browser puts on the browser tab.
 
 
 ![alt text](/images/favicon-browser-image.png "Favicon Example")
@@ -76,9 +76,9 @@ Cool! This is a pretty boring server. Let's make it more interesting. Working wi
 
 
 
-1. In the folder where you made server.js, run npm init -y to generate your package.json
+1. In the folder where you made server.js, run `npm init -y` to generate your package.json
 
-2. Run npm install express
+2. Run `npm install express`
 
 3. Change your server to look like this
 
