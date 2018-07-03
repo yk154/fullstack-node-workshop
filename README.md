@@ -31,10 +31,10 @@ The most basic server in Node is only couple of lines. Let's give it a shot. Sta
 P.S: Don't forget to make a new folder for this project, I don't want to see this code in your weather app ;)
 
 ```js
-const http = require("http");
+const http = require("http"); //1
 
-const server = http.createServer(function(req, res) {
-  console.log(`user visited ${req.url}`);
+const server = http.createServer(function(req, res) { //2
+  console.log(`user visited ${req.url}`); //3
   res.end("hello!");
 });
 
@@ -55,11 +55,11 @@ The browser just knows to look for it at that URL. In our case we're not serving
 
 So let's unpack our Node server a bit more.
 
-* We require in the http module which is a module baked into Node. This is the module that we use to do all the necessary communication to be able to run a web server. Think of this like the phone at the pizza place. It allows to listen to requests and then respond to them.
+* (//1) We require in the http module which is a module baked into Node. This is the module that we use to do all the necessary communication to be able to run a web server. Think of this like the phone at the pizza place. It allows to listen to requests and then respond to them.
 
-* The http.createServer method does exactly what you think it does: it creates a server! It takes a function as a callback and this function will be run every time a user makes a request to that server.
+* (//2) The http.createServer method does exactly what you think it does: it creates a server! It takes a function as a callback and this function will be run every time a user makes a request to that server.
 
-* The function has two parameters: req (request) and res (response).
+* (//3) The function has two parameters: req (request) and res (response).
 
     * The req parameter represents all the information coming from the user. You can see what URL they used to request, what parameters they sent you, what headers (headers are meta data that your browser sends with each request, like if you want the response to be in English, Spanish, etc.) they used, etc.
 
@@ -140,7 +140,7 @@ document
 <body>
   <h1>Complements!</h1>
   <p class="complement">none loaded yet</p>
-  <button class="request-compliment">Request New Complement</button>
+  <button class="request-complement">Request New Complement</button>
   <script src="./public/complements.js"></script>
 </body>
 
@@ -232,4 +232,3 @@ Luckily for us there are lots of hosting providers out there. And there are many
 Follow [these](https://devcenter.heroku.com/articles/deploying-nodejs) instructions and deploy your node.js application to Heroku!
 
 https://devcenter.heroku.com/articles/deploying-nodejs
-
